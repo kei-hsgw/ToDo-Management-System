@@ -11,6 +11,10 @@ import com.dmm.task.data.entity.Users;
 public class AccountUserDetails implements UserDetails {
 
 	private Users user;
+	
+	public AccountUserDetails(Users user) {
+		this.user = user;
+	}
 
 	// ユーザに与えられている権限リストを返却する
 	@Override
