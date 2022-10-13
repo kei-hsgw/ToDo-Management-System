@@ -1,6 +1,6 @@
 package com.dmm.task.data.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,14 +18,14 @@ public class Tasks {
 	/** テキスト */
 	private String text;
 	/** 日にち */
-	private Date date;
+	private LocalDate date;
 	/** 完了フラグ */
 	private boolean done = false; // 完了：true 未完了：false
 
 	public Tasks() {
 	}
 
-	public Tasks(Integer id, String title, String name, String text, Date date) {
+	public Tasks(Integer id, String title, String name, String text, LocalDate date) {
 		this.id = id;
 		this.title = title;
 		this.name = name;
@@ -65,11 +65,11 @@ public class Tasks {
 		this.text = text;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
