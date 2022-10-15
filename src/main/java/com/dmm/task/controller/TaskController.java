@@ -5,15 +5,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dmm.task.data.entity.Tasks;
 import com.dmm.task.data.repository.TaskRepository;
+import com.dmm.task.form.RegisterForm;
+import com.dmm.task.service.AccountUserDetails;
 
 @Controller
 public class TaskController {
@@ -79,5 +84,30 @@ public class TaskController {
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		model.addAttribute("tasks", tasks);
 		return "main";
+	}
+	
+	/**
+	 * 登録画面表示
+	 * @return
+	 */
+	@GetMapping("/main/create/{date}")
+	public String create() {
+		return "create";
+	}
+	
+	/**
+	 * 新規登録
+	 * @param registerForm
+	 * @param user
+	 * @return
+	 */
+	@PostMapping("/main/create")
+	public String registerTask(RegisterForm registerForm, @AuthenticationPrincipal AccountUserDetails user) {
+		Tasks task = new Tasks();
+		BeanUtils.copyProperties(registerForm, task);
+		task.setDate(LocalDate.parse(registerForm.getDate()));
+		task.setName(user.getName());
+		taskRepository.save(task);
+		return "redirect:/main";
 	}
 }
