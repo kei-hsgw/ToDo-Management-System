@@ -2,6 +2,7 @@ package com.dmm.task.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,9 @@ public class TaskController {
 	private TaskRepository taskRepository;
 
 	@GetMapping("/main")
-	public String main(Model model) {
+	public String main(Model model, @AuthenticationPrincipal AccountUserDetails user) {
+		
+		// カレンダーを表示させる処理
 		List<List<LocalDate>> matrix = new ArrayList<List<LocalDate>>();
 		List<LocalDate> week = new ArrayList<LocalDate>();
 		
@@ -53,7 +56,7 @@ public class TaskController {
 		int lastDay = day.lengthOfMonth();
 		
 		// 2週目以降
-		for (int i = 1; i <= lastDay; i++) {
+		for (int i = day.getDayOfMonth(); i < lastDay; i++) {
 			week.add(day);
 			w = day.getDayOfWeek();
 			if (w == DayOfWeek.SATURDAY) {
@@ -65,9 +68,7 @@ public class TaskController {
 		
 		// 翌月分を取得
 		w = day.getDayOfWeek();
-		System.out.println(w);
 		int nextMonthDays = 7 - w.getValue();
-		System.out.println(nextMonthDays);
 		
 		for (int i = 1; i <= nextMonthDays; i++) {
 			week.add(day);
@@ -78,10 +79,23 @@ public class TaskController {
 			}
 			day = day.plusDays(1);
 		}
-		
 		model.addAttribute("matrix", matrix);
 		
+		// カレンダーにタスクを表示させる処理
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
+		
+//		LocalDateTime from = matrix.get(0).get(0).atStartOfDay();
+//		System.out.println(from);
+//		LocalDateTime to = matrix.get(5).get(6).atTime(23, 59, 59);
+//		System.out.println(to);
+		
+		LocalDate from = matrix.get(0).get(0);
+		LocalDate to = matrix.get(5).get(6);
+		
+		List<Tasks> taskList = taskRepository.findByDateBetween(from, to, user.getName());
+		for (Tasks task : taskList) {
+			tasks.add(task.getDate(), task);
+		}
 		model.addAttribute("tasks", tasks);
 		return "main";
 	}
