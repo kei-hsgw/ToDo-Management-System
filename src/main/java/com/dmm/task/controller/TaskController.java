@@ -128,7 +128,7 @@ public class TaskController {
 	}
 	
 	/**
-	 * 編集画面表示
+	 * 編集・削除画面表示
 	 * @param id
 	 * @param model
 	 * @return
@@ -158,4 +158,16 @@ public class TaskController {
 		taskRepository.save(task);
 		return "redirect:/main";
 	}
+	
+	/**
+	 * 削除
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/main/delete/{id}")
+	public String delete(@PathVariable Integer id) {
+		taskRepository.deleteById(id);
+		return "redirect:/main";
+	}
+	
 }
