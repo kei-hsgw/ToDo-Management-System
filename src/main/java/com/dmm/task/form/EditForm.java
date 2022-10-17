@@ -1,13 +1,11 @@
 package com.dmm.task.form;
 
-import java.time.LocalDate;
-
 public class EditForm {
 
 	/** タイトル */
 	private String title;
 	/** 日にち */
-	private LocalDate date;
+	private String date;
 	/** テキスト */
 	private String text;
 	/** 完了フラグ */
@@ -21,11 +19,11 @@ public class EditForm {
 		this.title = title;
 	}
 
-	public LocalDate getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

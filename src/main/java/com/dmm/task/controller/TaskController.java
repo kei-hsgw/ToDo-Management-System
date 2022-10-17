@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dmm.task.data.entity.Tasks;
 import com.dmm.task.data.repository.TaskRepository;
+import com.dmm.task.form.EditForm;
 import com.dmm.task.form.RegisterForm;
 import com.dmm.task.service.AccountUserDetails;
 
@@ -138,5 +139,23 @@ public class TaskController {
 		Tasks task = taskOpt.get();
 		model.addAttribute("task", task);
 		return "edit";
+	}
+	
+	/**
+	 * 編集
+	 * @param id
+	 * @param editForm
+	 * @param user
+	 * @return
+	 */
+	@PostMapping("/main/edit/{id}")
+	public String editTask(@PathVariable Integer id, EditForm editForm, @AuthenticationPrincipal AccountUserDetails user) {
+		Optional<Tasks> taskOpt = taskRepository.findById(id);
+		Tasks task = taskOpt.get();
+		BeanUtils.copyProperties(editForm, task);
+		task.setDate(LocalDate.parse(editForm.getDate()));
+		task.setName(user.getName());
+		taskRepository.save(task);
+		return "redirect:/main";
 	}
 }
