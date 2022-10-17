@@ -86,11 +86,6 @@ public class TaskController {
 		// カレンダーにタスクを表示させる処理
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 		
-//		LocalDateTime from = matrix.get(0).get(0).atStartOfDay();
-//		System.out.println(from);
-//		LocalDateTime to = matrix.get(5).get(6).atTime(23, 59, 59);
-//		System.out.println(to);
-		
 		LocalDate from = matrix.get(0).get(0);
 		LocalDate to = matrix.get(5).get(6);
 		
