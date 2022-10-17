@@ -2,9 +2,9 @@ package com.dmm.task.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dmm.task.data.entity.Tasks;
@@ -123,5 +124,19 @@ public class TaskController {
 		task.setName(user.getName());
 		taskRepository.save(task);
 		return "redirect:/main";
+	}
+	
+	/**
+	 * 編集画面表示
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/main/edit/{id}")
+	public String edit(@PathVariable Integer id, Model model) {
+		Optional<Tasks> taskOpt = taskRepository.findById(id);
+		Tasks task = taskOpt.get();
+		model.addAttribute("task", task);
+		return "edit";
 	}
 }
