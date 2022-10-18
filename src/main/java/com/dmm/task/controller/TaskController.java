@@ -94,8 +94,8 @@ public class TaskController {
 		// カレンダーにタスクを表示させる処理
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 
-		LocalDate from = matrix.get(0).get(0);
-		LocalDate to = matrix.get(5).get(6);
+		LocalDate from = LocalDate.now().withDayOfMonth(1);
+		LocalDate to = LocalDate.now().withDayOfMonth(lastDay);
 		
 		Collection<? extends GrantedAuthority> list = user.getAuthorities();
 
