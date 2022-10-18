@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dmm.task.data.entity.Tasks;
 import com.dmm.task.data.repository.TaskRepository;
-import com.dmm.task.data.repository.UserRepository;
 import com.dmm.task.form.EditForm;
 import com.dmm.task.form.RegisterForm;
 import com.dmm.task.service.AccountUserDetails;
@@ -32,6 +31,12 @@ public class TaskController {
 	@Autowired
 	private TaskRepository taskRepository;
 
+	/**
+	 * トップページ表示
+	 * @param model
+	 * @param user
+	 * @return
+	 */
 	@GetMapping("/main")
 	public String main(Model model, @AuthenticationPrincipal AccountUserDetails user) {
 
