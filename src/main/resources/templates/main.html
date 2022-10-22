@@ -25,13 +25,13 @@
       <p class="title text sd">ToDo</p>
       <div class="todo_header">
 
-        <form th:action="@{/main}" name="form1">
+        <form th:action="@{/main/changeMonth}" name="form1">
           <span class="material-icons sd"><input type="hidden" name="date"
               th:value="${#temporals.format(prev, 'yyyy-MM-dd')}"><a class="prevnext"
               href="javascript:form1.submit()">keyboard_arrow_left</a></span>
         </form>
         <p class="test sd" style="margin: 5px 0px" th:text="${month}"></p>
-        <form th:action="@{/main}" name="form2">
+        <form th:action="@{/main/changeMonth}" name="form2">
           <span class="material-icons sd"><input type="hidden" name="date"
               th:value="${#temporals.format(next, 'yyyy-MM-dd')}"><a class="prevnext"
               href="javascript:form2.submit()">keyboard_arrow_right</a></span>
