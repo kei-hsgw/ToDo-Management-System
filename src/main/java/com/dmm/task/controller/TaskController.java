@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.Task;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,12 +56,10 @@ public class TaskController {
 		
 		// 前月分
 		LocalDate prev = day.minusMonths(1);
-		System.out.println(prev);
 		model.addAttribute("prev", prev);
 		
 		// 来月分
 		LocalDate next = day.plusMonths(1);
-		System.out.println(next);
 		model.addAttribute("next", next);
 
 		matrix = calenderService.getCalender(day);
@@ -82,7 +79,7 @@ public class TaskController {
 	}
 
 	@GetMapping("/main/changeMonth")
-	public String chageMonth(@RequestParam("date") String date, Model model, @AuthenticationPrincipal AccountUserDetails user) {
+	public String chageMonth(@RequestParam("date")String date, Model model, @AuthenticationPrincipal AccountUserDetails user) {
 		
 		// カレンダーを表示させる処理
 		List<List<LocalDate>> matrix = new ArrayList<List<LocalDate>>();
@@ -93,17 +90,16 @@ public class TaskController {
 		
 		// 前月分
 		LocalDate prev = day.minusMonths(1);
-		System.out.println(prev);
 		model.addAttribute("prev", prev);
 		
 		// 来月分
 		LocalDate next = day.plusMonths(1);
-		System.out.println(next);
 		model.addAttribute("next", next);
 
 		matrix = calenderService.getCalender(day);
 		model.addAttribute("matrix", matrix);
 
+		// カレンダーにタスクを表示させる処理
 		MultiValueMap<LocalDate, Tasks> tasks = new LinkedMultiValueMap<LocalDate, Tasks>();
 
 		LocalDate day1 = LocalDate.parse(date, dtf).withDayOfMonth(1);
